@@ -4,10 +4,10 @@ public class sucessOrFail extends numGenerator
 	private double actual;
 	private boolean outcome; 
 
-	public sucessOrFail(int check) 
+	public sucessOrFail(int check, Climate weather) 
 	{
 
-		super(/* insert the climate object here*/);
+		super(weather); // wait to add the climate class to compile. 
 
 		currentCheck = check; 
 		actual = Math.random() * (10-1) + 1;
