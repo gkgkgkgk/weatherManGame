@@ -26,8 +26,8 @@ public class City {
 		this.climate = c;
 	}	
 
-public double[] getNumbers(double[] a){
-	a = {rain, 
+public double[] getNumbers(){
+	double a[] = {rain, // you had the array in the parameter before 
 	 snow,
 	 heatWave, 
 	 hail,
