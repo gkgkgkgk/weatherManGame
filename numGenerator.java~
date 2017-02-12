@@ -1,4 +1,3 @@
-//num generator
 public class numGenerator 
 {
  String type[];
