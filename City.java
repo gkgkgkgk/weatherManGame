@@ -45,7 +45,7 @@ public class City {
     }
 
     public City returnCity() {
-    	//returns a city with a random name (String Getter function) and doubles 1-10 used for weather conditions of that city
+     //returns a city with a random name (String Getter function) and doubles 1-10 used for weather conditions of that city
         return new City(nameGetter(1),(Math.random() * (10-1) + 1), (Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1));
     }
     //recycled code from mapGenerator
