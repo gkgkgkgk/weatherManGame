@@ -13,7 +13,7 @@ public class WeatherMan extends JPanel implements ActionListener{
  JButton submit;
  JSlider input;
  JLabel value;
- public double check = 100000.00; //this is your money
+ public double check = 50000.00; //this is your money
   
  public WeatherMan(){
   w = new JFrame();
@@ -48,8 +48,9 @@ public void actionPerformed(ActionEvent e) {
        System.out.println("Next Turn");
       // do all the calculations here, and eventually bring up results panel.
        //this is where the rest of the calculations are called with their repective arguments (like player input)
-       double UI = 1.0;
-       City city = new City("",1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0);
+       double UI = input.getValue();
+       City city = new City("PlaceHolder",1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0); //just init the city so it can randomize
+       city = city.returnCity();
        new sucessOrFail(this, check, city, UI);
 
        turn+=1;

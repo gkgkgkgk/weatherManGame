@@ -15,6 +15,7 @@ public class numGenerator
   percent = Math.random() * (10-1) + 1; 
   double[] cityA = weather.getNumbers();// city array = cityA
   percent *= cityA[point];
+  System.out.println("City Name: "+weather.name+ " % "+percent + "Type: "+  finalType );
  }
 
  public double getPercent()
