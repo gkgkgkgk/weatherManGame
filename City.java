@@ -2,17 +2,17 @@ import java.util.Random;
 
 public class City {
 
-    double rain;
-    double snow;
-    double heatWave;
-    double hail;
-    double tsunami;
-    double drought;
-    double volcano;
-    double flooding;
-    double hurricane;
-    double tornado;
-    String name;
+    double rain = (Math.random() * (10-1) + 1);
+    double snow = (Math.random() * (10-1) + 1);
+    double heatWave = (Math.random() * (10-1) + 1);
+    double hail= (Math.random() * (10-1) + 1);
+    double tsunami= (Math.random() * (10-1) + 1);
+    double drought= (Math.random() * (10-1) + 1);
+    double volcano= (Math.random() * (10-1) + 1);
+    double flooding= (Math.random() * (10-1) + 1);
+    double hurricane= (Math.random() * (10-1) + 1);
+    double tornado= (Math.random() * (10-1) + 1);
+    String name = nameGetter(1);
 
     public City() {
         
@@ -34,10 +34,10 @@ public class City {
         return a;
     }
 
-    public City returnCity() {
+   /* public City returnCity() {
      //returns a city with a random name (String Getter function) and doubles 1-10 used for weather conditions of that city
         return new City(nameGetter(1),(Math.random() * (10-1) + 1), (Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1),(Math.random() * (10-1) + 1));
-    }
+    }*/
     //recycled code from mapGenerator
     public String nameGetter(int length) {
         String[] prefix = {

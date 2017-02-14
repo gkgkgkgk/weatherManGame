@@ -12,31 +12,37 @@ public class WeatherMan extends JPanel implements ActionListener{
  JFrame w;
  JButton submit;
  JSlider input;
- JLabel value;
+
  public double check = 50000.00; //this is your money
-  
+ 
+ JLabel scienceText;
+ int height = 600;
+ int width = 800;
+ 
+
  public WeatherMan(){
   w = new JFrame();
-  w.setSize(800, 600);
+  w.setSize(width, height);
   w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   w.setResizable(false);
+  setLayout(null);
   w.setLayout(null);
   w.setContentPane(this);
-  value = new JLabel("50");
-  submit = new JButton("Go!");
-  submit.setBounds(100,50,350,275);
+
+  submit = new JButton("50");
+  submit.setBounds(500,height - 75,100,50);
   submit.addActionListener(this);
   input = new JSlider();
-  input.setBounds(400, 20, 200, 580);
+  input.setBounds(200, height - 100, 300, 100);
   input.addChangeListener(new ChangeListener() {
   public void stateChanged(ChangeEvent e) {
         String a = "" + input.getValue();
-        value.setText(a);
+        submit.setText(a);
       }
     });
+  scienceText = new JLabel();
+  w.add(scienceText);
 
-
-  w.add(value);
   w.add(input);
   w.add(submit);
   w.setVisible(true);
@@ -50,7 +56,7 @@ public void actionPerformed(ActionEvent e) {
        //this is where the rest of the calculations are called with their repective arguments (like player input)
        double UI = input.getValue();
        City city = new City(); //just init the city so it can randomize
-       city = city.returnCity();
+       //city = city.returnCity();
        new sucessOrFail(this, check, city, UI);
 
        turn+=1;
