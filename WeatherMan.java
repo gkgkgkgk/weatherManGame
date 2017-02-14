@@ -49,7 +49,7 @@ public void actionPerformed(ActionEvent e) {
       // do all the calculations here, and eventually bring up results panel.
        //this is where the rest of the calculations are called with their repective arguments (like player input)
        double UI = input.getValue();
-       City city = new City("PlaceHolder",1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0); //just init the city so it can randomize
+       City city = new City(); //just init the city so it can randomize
        city = city.returnCity();
        new sucessOrFail(this, check, city, UI);
 
