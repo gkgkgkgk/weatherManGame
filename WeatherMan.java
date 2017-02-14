@@ -22,14 +22,14 @@ public class WeatherMan extends JPanel implements ActionListener{
   w.setResizable(false);
   w.setLayout(null);
   w.setContentPane(this);
-    value = new JLabel();
+  value = new JLabel("50");
   submit = new JButton("Go!");
   submit.setBounds(100,50,350,275);
   submit.addActionListener(this);
   input = new JSlider();
   input.setBounds(400, 20, 200, 580);
   input.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+  public void stateChanged(ChangeEvent e) {
         String a = "" + input.getValue();
         value.setText(a);
       }
