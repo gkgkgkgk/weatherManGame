@@ -13,14 +13,25 @@ public class WeatherMan extends JPanel implements ActionListener{
  JButton submit;
  JSlider input;
 
- public double check = 50000.00; //this is your money
+ private double check = 50000.00; //this is your money
  
+ private double sPercent;
+ private String thing; 
+ private City city;
+ private numGenerator a;
+
+
  JLabel scienceText;
  int height = 600;
  int width = 800;
  
 
- public WeatherMan(){
+ public WeatherMan(){    
+
+   city = new City();
+   a  = new numGenerator(city);
+  sPercent = a.getPercent();
+  thing = a.getEvent(); 
   w = new JFrame();
   w.setSize(width, height);
   w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,13 +45,14 @@ public class WeatherMan extends JPanel implements ActionListener{
   submit.addActionListener(this);
   input = new JSlider();
   input.setBounds(200, height - 100, 300, 100);
+
   input.addChangeListener(new ChangeListener() {
   public void stateChanged(ChangeEvent e) {
         String a = "" + input.getValue();
         submit.setText(a);
       }
     });
-  scienceText = new JLabel();
+  scienceText = new JLabel("The chance of " + thing +"in " + sPercent);
   w.add(scienceText);
 
   w.add(input);
@@ -55,14 +67,21 @@ public void actionPerformed(ActionEvent e) {
       // do all the calculations here, and eventually bring up results panel.
        //this is where the rest of the calculations are called with their repective arguments (like player input)
        double UI = input.getValue();
-       City city = new City(); //just init the city so it can randomize
+       //City city = new City(); //just init the city so it can randomize
        //city = city.returnCity();
-       new sucessOrFail(this, check, city, UI);
+       new sucessOrFail(this, check, city, UI, sPercent);
 
        turn+=1;
        
        if(turn == maxTurns){
        submit.setText("End Game!");
+       }
+       else {
+          City city = new City();
+      numGenerator a  = new numGenerator(city);
+      sPercent = a.getPercent();
+      thing = a.getEvent();
+      scienceText.setText("The chance of " + thing +"in " + sPercent);
        }
        
        

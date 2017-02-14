@@ -22,4 +22,9 @@ public class numGenerator
  {
   return percent;
  }
+
+ public String getEvent()
+ {
+ 	return finalType; 
+ }
 }
