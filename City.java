@@ -14,18 +14,8 @@ public class City {
     double tornado;
     String name;
 
-    public City(String name, double rain, double snow, double heatWave, double hail, double tsunami, double drought, double volcano, double flooding, double hurricane, double tornado) {
-        this.rain = rain;
-        this.snow = snow;
-        this.heatWave = heatWave;
-        this.hail = hail;
-        this.tsunami = tsunami;
-        this.drought = drought;
-        this.volcano = volcano;
-        this.flooding = flooding;
-        this.hurricane = hurricane;
-        this.tornado = tornado;
-        this.name = name;
+    public City() {
+        
     }
 
     public double[] getNumbers() {
