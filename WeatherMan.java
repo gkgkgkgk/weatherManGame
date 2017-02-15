@@ -23,15 +23,15 @@ public class WeatherMan extends JPanel implements ActionListener{
  private String cityN; 
 
 
- JLabel scienceText;
- int height = 600;
- int width = 800;
+ JTextArea  scienceText;
+ int height = 1400;
+ int width = 1400;
  
 
  public WeatherMan(){    
 
    city = new City();
-   cityN = city.nameGetter(3); 
+   cityN = city.nameGetter(0); 
    a  = new numGenerator(city);
   sPercent = (int)a.getPercent();
   thing = a.getEvent(); 
@@ -55,8 +55,19 @@ public class WeatherMan extends JPanel implements ActionListener{
         submit.setText(a);
       }
     });
-  scienceText = new JLabel(Fluff.getScience(thing,sPercent,cityN));
-  scienceText.setBounds(500,height - 175,500,100); 
+
+  String sData = Fluff.getScience(thing,sPercent,cityN);//GAVRI LOOK HERE
+  scienceText.setText("Hello"); 
+  scienceText = new JTextArea(2, 10);
+  scienceText.setWrapStyleWord(true);
+  scienceText.setLineWrap(true);
+  scienceText.setOpaque(false);
+  scienceText.setEditable(false);
+  scienceText.setFocusable(false);
+  scienceText.setBackground(UIManager.getColor("Label.background"));
+  scienceText.setFont(UIManager.getFont("Label.font"));
+  scienceText.setBorder(UIManager.getBorder("Label.border"));
+  scienceText.setBounds(500,height - 245,500,100); 
   w.add(scienceText);
 
   w.add(input);
