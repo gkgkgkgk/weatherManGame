@@ -23,9 +23,10 @@ public class WeatherMan extends JPanel implements ActionListener{
  private String cityN; 
 
 
- JTextArea  scienceText;
- int height = 1400;
- int width = 1400;
+ JLabel scienceText = new JLabel();
+  JTextArea scienceTextArea;
+ int height = 600;
+ int width = 800;
  
 
  public WeatherMan(){    
@@ -39,8 +40,8 @@ public class WeatherMan extends JPanel implements ActionListener{
   w.setSize(width, height);
   w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   w.setResizable(false);
-  setLayout(null);
-  w.setLayout(null);
+  setLayout(new GridBagLayout());
+  w.setLayout(new GridBagLayout());
   w.setContentPane(this);
 
   submit = new JButton("50");
@@ -57,22 +58,33 @@ public class WeatherMan extends JPanel implements ActionListener{
     });
 
   String sData = Fluff.getScience(thing,sPercent,cityN);//GAVRI LOOK HERE
-  scienceText.setText("Hello"); 
-  scienceText = new JTextArea(2, 10);
-  scienceText.setWrapStyleWord(true);
-  scienceText.setLineWrap(true);
-  scienceText.setOpaque(false);
-  scienceText.setEditable(false);
-  scienceText.setFocusable(false);
-  scienceText.setBackground(UIManager.getColor("Label.background"));
-  scienceText.setFont(UIManager.getFont("Label.font"));
-  scienceText.setBorder(UIManager.getBorder("Label.border"));
-  scienceText.setBounds(500,height - 245,500,100); 
-  w.add(scienceText);
+  scienceTextArea = new JTextArea();
+  scienceTextArea.setText(sData); 
+    scienceTextArea.setLineWrap(true);
+    scienceTextArea.setWrapStyleWord(true);
+
+  JScrollPane scrollPane = new JScrollPane(scienceTextArea);
+  scienceTextArea.setOpaque(true);
+  scienceTextArea.setEditable(false);
+  scienceTextArea.setFocusable(false);
+  scienceTextArea.setBounds(500,height - 245,500,100); 
+
+
 
   w.add(input);
   w.add(submit);
+  w.add(scienceTextArea);
   w.setVisible(true);
+  scienceTextArea.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent ce) {
+
+                System.out.println("I've changed size");
+
+            }
+
+        });
  } 
  
  
@@ -97,7 +109,7 @@ public void actionPerformed(ActionEvent e) {
       sPercent = a.getPercent();
       thing = a.getEvent();
       cityN = city.nameGetter(3); 
-      scienceText.setText(Fluff.getScience(thing,sPercent,cityN));
+      scienceTextArea.setText(Fluff.getScience(thing,sPercent,cityN));
        }
        
        
