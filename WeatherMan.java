@@ -13,22 +13,25 @@ public class WeatherMan extends JPanel implements ActionListener{
  JButton submit;
  JSlider input;
 
+
  private double check = 50000.00; //this is your money
  
  private double sPercent;
  private String thing; 
  private City city;
  private numGenerator a;
+ private String cityN; 
 
 
  JLabel scienceText;
- int height = 600;
- int width = 800;
+ int height = 1400;
+ int width = 1400;
  
 
  public WeatherMan(){    
 
    city = new City();
+   cityN = city.nameGetter(3); 
    a  = new numGenerator(city);
   sPercent = (int)a.getPercent();
   thing = a.getEvent(); 
@@ -52,7 +55,7 @@ public class WeatherMan extends JPanel implements ActionListener{
         submit.setText(a);
       }
     });
-  scienceText = new JLabel(Fluff.getScience(thing,sPercent,city.nameGetter(3)));
+  scienceText = new JLabel(Fluff.getScience(thing,sPercent,cityN));
   scienceText.setBounds(500,height - 175,500,100); 
   w.add(scienceText);
 
@@ -82,7 +85,8 @@ public void actionPerformed(ActionEvent e) {
       numGenerator a  = new numGenerator(city);
       sPercent = a.getPercent();
       thing = a.getEvent();
-      scienceText.setText("The chance of " + thing +"in " + sPercent);
+      cityN = city.nameGetter(3); 
+      scienceText.setText(Fluff.getScience(thing,sPercent,cityN));
        }
        
        
