@@ -39,16 +39,18 @@ public class WeatherMan extends JPanel implements ActionListener{
   w = new JFrame();
   w.setSize(width, height);
   w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  w.setResizable(false);
-  setLayout(new GridBagLayout());
-  w.setLayout(new GridBagLayout());
+  w.setResizable(true);
+  setLayout(new BorderLayout());
+  GridBagConstraints c = new GridBagConstraints();
+  //PLEASE READ THIS GREG: 
+  //https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
   w.setContentPane(this);
 
   submit = new JButton("50");
-  submit.setBounds(500,height - 75,100,50);
+  //submit.setBounds(500,height - 75,100,50);
   submit.addActionListener(this);
   input = new JSlider();
-  input.setBounds(200, height - 100, 300, 100);
+  //input.setBounds(200, height - 100, 300, 100);
 
   input.addChangeListener(new ChangeListener() {
   public void stateChanged(ChangeEvent e) {
@@ -67,13 +69,16 @@ public class WeatherMan extends JPanel implements ActionListener{
   scienceTextArea.setOpaque(true);
   scienceTextArea.setEditable(false);
   scienceTextArea.setFocusable(false);
-  scienceTextArea.setBounds(500,height - 245,500,100); 
+  //scienceTextArea.setBounds(500,height - 245,500,100); 
 
-
-
-  w.add(input);
-  w.add(submit);
-  w.add(scienceTextArea);
+  //added a new panel to store the button and slider next to each other!
+  //no need for absolute positioning anymore 
+  JPanel bottomPanel = new JPanel();
+  bottomPanel.add(input,BorderLayout.PAGE_END);
+  bottomPanel.add(submit,BorderLayout.PAGE_END);
+  
+  w.add(bottomPanel,BorderLayout.PAGE_END);
+  w.add(scienceTextArea,BorderLayout.PAGE_START);
   w.setVisible(true);
   scienceTextArea.addComponentListener(new ComponentAdapter() {
 
