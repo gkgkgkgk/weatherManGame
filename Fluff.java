@@ -40,12 +40,12 @@ public class Fluff {
 
   //call this function to return the string for the scientist jlabel
   
-  public String getScience(String type, double percentage){
+  public String getScience(String type, double percentage, String city){
     String finalS = "";
     String[] person = {"Experts ", "Scientists ", "Meteorologists ", "Specialists "};
     String[] verb = {"predict ", "expect ", "anticipate ", "foresee ", "report "};
     String[] adj = {" severe ", " mild ", " major ", " fatal ", " intense ", "", " strong "};
-    finalS = person[r.nextInt(person.length)]+verb[r.nextInt(verb.length)]+"a " + percentage +"% chance of" + adj[r.nextInt(adj.length)] + type + " weather ";
+    finalS = person[r.nextInt(person.length)]+verb[r.nextInt(verb.length)]+"a " + percentage +"% chance of" + adj[r.nextInt(adj.length)] + type + " weather in" +city;
     return finalS;
   }
  /*
