@@ -8,7 +8,7 @@ public class Fluff {
   }
   */
   
-  Random r = new Random();
+  static Random r = new Random();
   
   //call this to get a random headline for the background UI
   
@@ -40,7 +40,7 @@ public class Fluff {
 
   //call this function to return the string for the scientist jlabel
   
-  public String getScience(String type, double percentage, String city){
+  public static String getScience(String type, double percentage, String city){
     String finalS = "";
     String[] person = {"Experts ", "Scientists ", "Meteorologists ", "Specialists "};
     String[] verb = {"predict ", "expect ", "anticipate ", "foresee ", "report "};

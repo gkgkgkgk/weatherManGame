@@ -30,7 +30,7 @@ public class WeatherMan extends JPanel implements ActionListener{
 
    city = new City();
    a  = new numGenerator(city);
-  sPercent = a.getPercent();
+  sPercent = (int)a.getPercent();
   thing = a.getEvent(); 
   w = new JFrame();
   w.setSize(width, height);
@@ -52,7 +52,8 @@ public class WeatherMan extends JPanel implements ActionListener{
         submit.setText(a);
       }
     });
-  scienceText = new JLabel("The chance of " + thing +"in " + sPercent);
+  scienceText = new JLabel(Fluff.getScience(thing,sPercent,city.nameGetter(3)));
+  scienceText.setBounds(500,height - 175,500,100); 
   w.add(scienceText);
 
   w.add(input);
