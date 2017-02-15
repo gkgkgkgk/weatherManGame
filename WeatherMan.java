@@ -24,8 +24,8 @@ public class WeatherMan extends JPanel implements ActionListener{
 
 
  JLabel scienceText;
- int height = 1400;
- int width = 1400;
+ int height = 600;
+ int width = 800;
  
 
  public WeatherMan(){    
