@@ -86,10 +86,7 @@ public void actionPerformed(ActionEvent e) {
        
        
        }
-      else if (e.getSource() == submit && turn >= maxTurns){
-      //bring up gameOver panel (IF I HAD ONE)
-        System.out.println("game over");
-      }
+
              
    }
    
