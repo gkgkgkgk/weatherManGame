@@ -20,19 +20,51 @@ public class sucessOrFail //extends numGenerator
   if(aDif < 0) outcome = false; 
   else if (aDif >= 0 ) outcome = true; 
   
-  userInput = userInput/10.0;
+  userInput = userInput;
   
   //raise = Math.abs(userInput - actual)/100.0; 
-
+/*
   raise = UserInput - (actual / getPercent);
   // UI = 60% actual 70% and getPercent is 80%, then outcome = false, so raise = 
   // 60 - (70/80) = 78.5;
   //^^^ This works for some reason, i guess.
   
   
-  if(!outcome) raise *= -1;
+  if(!outcome && userInput > 30) raise *= -1;
+
+  if(userInput == getPercent) raise = 0; 
   
   System.out.println("outcome: "+outcome+" Raise: " + raise);
+
+  */
+  System.out.println(outcome); 
+raise = Math.abs(UserInput - getPercent); 
+  
+  if(outcome && getPercent > 50)  //if it happens and scientists are right
+  {// raise
+    if(UserInput < 50){
+      raise = (-1)*(getPercent-UserInput);
+    }
+    else if(UserInput < getPercent){
+      raise = (-1)*Math.abs(UserInput-getPercent);
+    }
+    else{
+      raise = (1)*Math.abs(UserInput-getPercent);
+    }
+  }
+
+  else if(outcome && getPercent < 50) //happens and scientists are wrong
+   {
+  if(UserInput > 50){ // you were wrong
+      raise = (-1)*(getPercent-UserInput);
+    }
+    else if(getPercent < UserInput){ //they guess lower than you
+      raise = (-1)*Math.abs(UserInput-getPercent);
+    }
+    else{ // they guess more than you and doesnt happen
+      raise = (1)*Math.abs(UserInput-getPercent);
+    }   } 
+ 
   
   currentCheck += (currentCheck*raise);
   System.out.println("currentCheck: "+ currentCheck);

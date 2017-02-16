@@ -45,7 +45,7 @@ public class Fluff {
     String[] person = {"Experts ", "Scientists ", "Meteorologists ", "Specialists "};
     String[] verb = {"predict ", "expect ", "anticipate ", "foresee ", "report "};
     String[] adj = {" severe ", " mild ", " major ", " fatal ", " intense ", "", " strong "};
-    finalS = person[r.nextInt(person.length)]+verb[r.nextInt(verb.length)]+"a " + Math.round(percentage) +"% chance of" + adj[r.nextInt(adj.length)] + type + " weather in " +city;
+    finalS = person[r.nextInt(person.length)]+verb[r.nextInt(verb.length)]+"a " + Math.round(percentage) +"% chance of " + adj[r.nextInt(adj.length)] + type + " weather in " +city;
     return finalS;
   }
  /*
