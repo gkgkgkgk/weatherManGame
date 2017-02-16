@@ -8,7 +8,8 @@ public class WeatherMan extends JPanel implements ActionListener{
  
  public int turn = 0; // check when game is over
  public int maxTurns = 20;
- public boolean fatal = false; // double profit if fatal weather is predicted, double loss and possible job loss if not
+ public boolean fatal = false; 
+ // double profit if fatal weather is predicted, double loss and possible job loss if not
  JFrame w;
  JButton submit;
  JSlider input;
@@ -31,6 +32,7 @@ public class WeatherMan extends JPanel implements ActionListener{
 
  public WeatherMan(){    
 
+   
    city = new City();
    cityN = city.nameGetter(0); 
    a  = new numGenerator(city);
@@ -41,11 +43,17 @@ public class WeatherMan extends JPanel implements ActionListener{
   w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   w.setResizable(true);
   setLayout(new BorderLayout());
-  GridBagConstraints c = new GridBagConstraints();
   //PLEASE READ THIS GREG: 
   //https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
   w.setContentPane(this);
 
+  
+     Rectangle r = w.getBounds();
+   double currentHeight = r.height;
+   double currentWidth = r.width;
+   
+  
+  
   submit = new JButton("50");
   //submit.setBounds(500,height - 75,100,50);
   submit.addActionListener(this);
@@ -64,22 +72,31 @@ public class WeatherMan extends JPanel implements ActionListener{
   scienceTextArea.setText(sData); 
     scienceTextArea.setLineWrap(true);
     scienceTextArea.setWrapStyleWord(true);
+    //scienceTextArea.setComponentOrientation(ComponentOrientation.CENTER);
 
   JScrollPane scrollPane = new JScrollPane(scienceTextArea);
-  scienceTextArea.setOpaque(true);
+  scienceTextArea.setOpaque(false);
   scienceTextArea.setEditable(false);
   scienceTextArea.setFocusable(false);
-  //scienceTextArea.setBounds(500,height - 245,500,100); 
+
 
   //added a new panel to store the button and slider next to each other!
   //no need for absolute positioning anymore 
   JPanel bottomPanel = new JPanel();
   bottomPanel.add(input,BorderLayout.PAGE_END);
   bottomPanel.add(submit,BorderLayout.PAGE_END);
+  JPanel sciencePanel = new JPanel();
+  scienceTextArea.setPreferredSize(new Dimension(200, (int)currentHeight));
+  sciencePanel.add(scienceTextArea,BorderLayout.PAGE_END);
+  JPanel test = new JPanel();
+
+
+  
+
   
   w.add(bottomPanel,BorderLayout.PAGE_END);
-  w.add(scienceTextArea,BorderLayout.PAGE_START);
-  w.setVisible(true);
+  w.add(sciencePanel,BorderLayout.LINE_START);
+
   scienceTextArea.addComponentListener(new ComponentAdapter() {
 
             @Override
@@ -90,6 +107,9 @@ public class WeatherMan extends JPanel implements ActionListener{
             }
 
         });
+
+
+    w.setVisible(true);
  } 
  
  
@@ -129,6 +149,7 @@ public void actionPerformed(ActionEvent e) {
 
  
  public static void main(String[] args){
+   
  new WeatherMan();
  }
 
