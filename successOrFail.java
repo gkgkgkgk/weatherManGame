@@ -42,56 +42,60 @@ raise = Math.abs(UserInput - getPercent);
   
   if(outcome && getPercent > 50)  //if it happens and scientists are right
   {// raise
-    if(UserInput < 50){ // you were wrong
-      raise = (-1)*(getPercent-UserInput);
+    if(UserInput < 50){ // you were wrong, so return difference between you and the scientist data
+      raise = (-1.0)*(getPercent-UserInput);
     }
-    else if(UserInput < getPercent){
-      raise = (-1)*Math.abs(UserInput-getPercent);
+    else if(UserInput < getPercent){ // you were right, but not as right as the scientists.
+      raise = (100.0 - Math.abs(getPercent-UserInput)); // get diff between you and scientist data
     }
     else{
-      raise = (1)*Math.abs(UserInput-getPercent);
-    }
+      raise = Math.abs(UserInput-getPercent); // you were the most right. further away from scienrtist data, the better
+    } 
   }
 
   else if(outcome && getPercent < 50) //happens and scientists are wrong
    {
-  if(UserInput > 50){ // you were right
-      raise = (1)*Math.abs(getPercent-UserInput);
+    if(userInput < 50){
+      raise = (-1.0)*Math.abs(UserInput - getPercent); // you were wrong that it did not happen. Return diff between you and scientist
     }
-    else if(getPercent < UserInput){ //they guess lower than you
-      raise = (-1)*Math.abs(UserInput-getPercent);
+    else if(UserInput < getPercent){ // scientists were more right, closer to them the better
+        raise = (100.0 - Math.abs(getPercent-UserInput));
     }
-    else{ // they guess more than you and doesnt happen
-      raise = (1)*Math.abs(UserInput-getPercent);
-    }   
+    else{
+      raise = Math.abs(UserInput-getPercent);
+    }
+
+
   }
   else if (!outcome && getPercent > 50) // doesn't happen and scientists are wrong
   {
     if(UserInput > 50) {// you are also wrong 
-      raise = (-1)*Math.abs(getPercent-UserInput);
+      raise = (-1.0)*Math.abs(getPercent-UserInput);
     }
-    else if (UserInput > getPercent) {// you said more than them.
-      raise = (-1)*Math.abs(getPercent-UserInput);
+    else if (UserInput > getPercent) { // you were more wrong.... closer is better
+      raise = (100.0 - Math.abs(getPercent-UserInput));
     } 
     else
     {
-      raise = (1)*Math.abs(getPercent-UserInput);
+      raise = Math.abs(getPercent-UserInput); // you were right
     }
   }
     else if (!outcome && getPercent<50)// doesn't happen and the scientits are right
     {
       if(UserInput > 50){// you were wrong
-        raise = (-1)*Math.abs(getPercent-UserInput);
+        raise = (-1.0)*Math.abs(getPercent-UserInput);
       }
-      else if (UserInput < getPercent){// you said more than the scientits
-        raise = (-1)*Math.abs(getPercent-UserInput);
+      else if (UserInput > getPercent){// you were not as right... closer the better 
+        raise = (100.0 - Math.abs(getPercent-UserInput));
       }
-      else{ raise = (1)*Math.abs(getPercent-UserInput);}
+      else{ raise = (1.0)*Math.abs(getPercent-UserInput); // you were the most right
+      }
     }
 
    
- 
-  
+  raise = (raise/100.0);
+
+  System.out.println("check + raise: "+currentCheck + raise);
   currentCheck += (currentCheck*raise);
   System.out.println("currentCheck: "+ currentCheck);
   wm.setCheck(currentCheck); //cuz of static stuffs
