@@ -5,7 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class WeatherMan extends JPanel implements ActionListener{
- 
+  private Font font = new Font("serif", Font.PLAIN, 25);
  public int turn = 0; // check when game is over
  public int maxTurns = 20;
  public boolean fatal = false; 
@@ -16,7 +16,7 @@ public class WeatherMan extends JPanel implements ActionListener{
 
 
  private double check = 50000.00; //this is your money
- 
+ private successOrFail out; 
  private double sPercent;
  private String thing; 
  private City city;
@@ -25,7 +25,7 @@ public class WeatherMan extends JPanel implements ActionListener{
 
 
  JLabel scienceText = new JLabel();
-  JTextArea scienceTextArea;
+  JTextArea scienceTextArea,rFinal, tCheck;
  int height = 600;
  int width = 800;
  
@@ -67,17 +67,44 @@ public class WeatherMan extends JPanel implements ActionListener{
       }
     });
 
-  String sData = Fluff.getScience(thing,sPercent,cityN);//GAVRI LOOK HERE
+  String sData = Fluff.getScience(thing,sPercent,cityN);
+
   scienceTextArea = new JTextArea();
-  scienceTextArea.setText(sData); 
+  scienceTextArea.setText(sData);
+  scienceTextArea.setFont(font);  
     scienceTextArea.setLineWrap(true);
     scienceTextArea.setWrapStyleWord(true);
+
+
+    rFinal = new JTextArea();
+    rFinal.setText(""); 
+    rFinal.setFont(font); 
+    rFinal.setLineWrap(true); 
+    rFinal.setWrapStyleWord(true);
+
+    tCheck = new JTextArea(); 
+    tCheck.setText(""+check); 
+    tCheck.setFont(font);
+    tCheck.setLineWrap(true);
+    tCheck.setWrapStyleWord(true);
     //scienceTextArea.setComponentOrientation(ComponentOrientation.CENTER);
 
   JScrollPane scrollPane = new JScrollPane(scienceTextArea);
   scienceTextArea.setOpaque(false);
   scienceTextArea.setEditable(false);
   scienceTextArea.setFocusable(false);
+
+  JScrollPane scrollPanee = new JScrollPane(rFinal);
+  rFinal.setOpaque(false); 
+  rFinal.setEditable(false); 
+  rFinal.setFocusable(false);
+
+    JScrollPane scrollpaneee = new JScrollPane(tCheck);
+    tCheck.setOpaque(false);
+    tCheck.setEditable(false); 
+    tCheck.setFocusable(false);
+
+
 
 
   //added a new panel to store the button and slider next to each other!
@@ -88,7 +115,12 @@ public class WeatherMan extends JPanel implements ActionListener{
   JPanel sciencePanel = new JPanel();
   scienceTextArea.setPreferredSize(new Dimension(200, (int)currentHeight));
   sciencePanel.add(scienceTextArea,BorderLayout.PAGE_END);
-  JPanel test = new JPanel();
+  JPanel result = new JPanel();
+  result.setPreferredSize(new Dimension((int)currentWidth-500, (int)currentHeight));
+  result.add(rFinal,BorderLayout.PAGE_END);
+  JPanel pCheck = new JPanel();
+   pCheck.setPreferredSize(new Dimension((int)currentWidth, (int)currentHeight));
+   pCheck.add(tCheck,BorderLayout.LINE_END);
 
 
   
@@ -96,7 +128,8 @@ public class WeatherMan extends JPanel implements ActionListener{
   
   w.add(bottomPanel,BorderLayout.PAGE_END);
   w.add(sciencePanel,BorderLayout.LINE_START);
-
+  w.add(result,BorderLayout.LINE_END); 
+  //w.add(pCheck,BorderLayout.LINE_END); //I DON'T KNOW HOW TO ADD THIS SO THAT RESULT DOESN'T GO AWAY AND I DON'T KNOW HOW TO MAKE RESULT FILL UP MORE OF THE SCREEN. 
   scienceTextArea.addComponentListener(new ComponentAdapter() {
 
             @Override
@@ -121,7 +154,7 @@ public void actionPerformed(ActionEvent e) {
        double UI = input.getValue();
        //City city = new City(); //just init the city so it can randomize
        //city = city.returnCity();
-       new successOrFail(this, check, city, UI, sPercent);
+      out = new successOrFail(this, check, city, UI, sPercent);
 
        turn+=1;
        
@@ -129,17 +162,21 @@ public void actionPerformed(ActionEvent e) {
        submit.setText("End Game!");
        }
        else {
+        tCheck.setText("" + (double)((int)(check*100))/100);
+          rFinal.setText(Fluff.getResult(out.getOutcome(),thing,cityN));
           City city = new City();
       numGenerator a  = new numGenerator(city);
       sPercent = a.getPercent();
       thing = a.getEvent();
       cityN = city.nameGetter(3); 
-      scienceTextArea.setText(Fluff.getScience(thing,sPercent,cityN));
-       }
-       
-       
-       }
+      //scienceTextArea.setText(Fluff.getScience(thing,sPercent,cityN))
 
+
+       }
+       
+       
+       }
+       
              
    }
    
