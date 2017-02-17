@@ -20,7 +20,7 @@ public class sucessOrFail //extends numGenerator
   if(aDif < 0) outcome = false; 
   else if (aDif >= 0 ) outcome = true; 
   
-  userInput = userInput;
+
   
   //raise = Math.abs(userInput - actual)/100.0; 
 /*
@@ -42,7 +42,7 @@ raise = Math.abs(UserInput - getPercent);
   
   if(outcome && getPercent > 50)  //if it happens and scientists are right
   {// raise
-    if(UserInput < 50){
+    if(UserInput < 50){ // you were wrong
       raise = (-1)*(getPercent-UserInput);
     }
     else if(UserInput < getPercent){
@@ -55,24 +55,50 @@ raise = Math.abs(UserInput - getPercent);
 
   else if(outcome && getPercent < 50) //happens and scientists are wrong
    {
-  if(UserInput > 50){ // you were wrong
-      raise = (-1)*(getPercent-UserInput);
+  if(UserInput > 50){ // you were right
+      raise = (1)*Math.abs(getPercent-UserInput);
     }
     else if(getPercent < UserInput){ //they guess lower than you
       raise = (-1)*Math.abs(UserInput-getPercent);
     }
     else{ // they guess more than you and doesnt happen
       raise = (1)*Math.abs(UserInput-getPercent);
-    }   } 
+    }   
+  }
+  else if (!outcome && getPercent > 50) // doesn't happen and scientists are wrong
+  {
+    if(UserInput > 50) {// you are also wrong 
+      raise = (-1)*Math.abs(getPercent-UserInput);
+    }
+    else if (UserInput > getPercent) {// you said more than them.
+      raise = (-1)*Math.abs(getPercent-UserInput);
+    } 
+    else
+    {
+      raise = (1)*Math.abs(getPercent-UserInput);
+    }
+  }
+    else if (!outcome && getPercent<50)// doesn't happen and the scientits are right
+    {
+      if(UserInput > 50){// you were wrong
+        raise = (-1)*Math.abs(getPercent-UserInput);
+      }
+      else if (UserInput < getPercent){// you said more than the scientits
+        raise = (-1)*Math.abs(getPercent-UserInput);
+      }
+      else{ raise = (1)*Math.abs(getPercent-UserInput);}
+    }
+
+   
  
   
   currentCheck += (currentCheck*raise);
   System.out.println("currentCheck: "+ currentCheck);
   wm.setCheck(currentCheck); //cuz of static stuffs
+
  }
  public boolean getOutcome()
  {
   return outcome;
  }
-
 }
