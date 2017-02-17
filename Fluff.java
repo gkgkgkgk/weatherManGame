@@ -12,7 +12,7 @@ public class Fluff {
   
   //call this to get a random headline for the background UI
   
-  public String getHeadline() {
+  public static String getHeadline() {
         String[] a = {
             "Study Reveals: Babies Are Stupid",
             "World Death Rate Holding Steady at 100 Percent",
@@ -38,7 +38,56 @@ public class Fluff {
         return a[r.nextInt(a.length)];
     }
 
-  //call this function to return the string for the scientist jlabel
+    public static String getResult(boolean outcome, String type, String city)
+    {
+      String finalS = "";
+      String piece = "";
+      if(!(type.equals("volcano") || type.equals("tsunami") || type.equals("flooding") || type.equals("drought") || type.equals("hurricane") || type.equals("tornado") || type.equals("heat wave") )){
+      if(outcome) finalS = "It " + type + "ed in " + city + " yesterday";
+      else finalS = "It did not " + type + " in " + city + " yesterday"; 
+    }
+    else
+    {
+      if(outcome) piece = "did indeed";
+      else piece = "did not in fact"; 
+
+      switch (type)// i made this a switch because we can make these more personalized (i.e volcanos erupt...... )
+      {
+        case "volcano": 
+        finalS = "the volcano " + piece + " erupt yesterday in " + city; 
+        break; 
+
+        case "tsunami": 
+        finalS = "the tsunami " + piece + " occur yesterday in " + city; 
+        break; 
+
+        case "drought": 
+        finalS = "the " + type + " " + piece + " occur yesterday in " + city; 
+        break; 
+
+        case "tornado": 
+        finalS = "the " + type + " " + piece + " occur yesterday in " + city; 
+        break; 
+
+        case "hurricane": 
+        finalS = "the " + type + " " + piece + " occur yesterday in " + city; 
+        break; 
+
+        case "flooding": 
+        finalS = "the " + type + " " + piece + " occur yesterday in " + city; 
+        break; 
+        case "heat wave": 
+        finalS = "the " + type + " " + piece + " occur yesterday in " + city; 
+        break; 
+        
+        default: //this shouldn't happen 
+        finalS = "on a scale of 1 to Gavri this code is working just as well as Gavri "; 
+        break; 
+      }
+    }
+      return finalS; 
+    }
+  //call this function to return the string for the scientist JTextArea
   
   public static String getScience(String type, double percentage, String city){
     String finalS = "";
@@ -48,9 +97,5 @@ public class Fluff {
     finalS = person[r.nextInt(person.length)]+verb[r.nextInt(verb.length)]+"a " + Math.round(percentage) +"% chance of " + adj[r.nextInt(adj.length)] + type + " weather in " +city;
     return finalS;
   }
- /*
-  public static void main(String[] args){
-    new Fluff();
-  }
-  */
+
 }

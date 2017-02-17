@@ -39,9 +39,9 @@ public class successOrFail //extends numGenerator
   */
   System.out.println(outcome); 
 raise = Math.abs(UserInput - getPercent); 
-  
-  if(outcome && getPercent > 50)  //if it happens and scientists are right
-  {// raise
+  if(UserInput == 50) raise = 0; 
+  else if(outcome && getPercent > 50)  //if it happens and scientists are right
+  {// rais
     if(UserInput < 50){ // you were wrong, so return difference between you and the scientist data
       raise = (-1.0)*(getPercent-UserInput);
     }
@@ -96,6 +96,7 @@ raise = Math.abs(UserInput - getPercent);
   raise = (raise/100.0);
 
   System.out.println("check + raise: "+currentCheck + raise);
+  System.out.println("your raise is " + raise); 
   currentCheck += (currentCheck*raise);
   System.out.println("currentCheck: "+ currentCheck);
   wm.setCheck(currentCheck); //cuz of static stuffs
