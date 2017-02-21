@@ -4,133 +4,129 @@ import java.awt.event.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class WeatherMan extends JPanel implements ActionListener{
-  private Font font = new Font("serif", Font.PLAIN, 25);
- public int turn = 0; // check when game is over
- public int maxTurns = 20;
- public boolean fatal = false; 
- // double profit if fatal weather is predicted, double loss and possible job loss if not
- JFrame w;
- JButton submit;
- JSlider input;
+public class WeatherMan extends JPanel implements ActionListener {
+    private Font font = new Font("serif", Font.PLAIN, 25);
+    public int turn = 0; // check when game is over
+    public int maxTurns = 20;
+    public boolean fatal = false;
+    // double profit if fatal weather is predicted, double loss and possible job loss if not
+    JFrame w;
+    JButton submit;
+    JSlider input;
+    JButton next;
+
+    private double check = 50000.00; //this is your money
+    private successOrFail out;
+    private double sPercent;
+    private String thing;
+    private City city;
+    private numGenerator a;
+    private String cityN;
+    JPanel bottomPanel, pCheck;
+
+    JLabel scienceText = new JLabel();
+    JTextArea scienceTextArea, rFinal, tCheck;
+    int height = 600;
+    int width = 800;
 
 
- private double check = 50000.00; //this is your money
- private successOrFail out; 
- private double sPercent;
- private String thing; 
- private City city;
- private numGenerator a;
- private String cityN; 
+    public WeatherMan() {
+
+        next = new JButton("Next");
+        next.setVisible(false);
+        next.addActionListener(this);
+        city = new City();
+        cityN = city.nameGetter(0);
+        a = new numGenerator(city);
+        sPercent = (int) a.getPercent();
+        thing = a.getEvent();
+        w = new JFrame();
+        w.setSize(width, height);
+        w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        w.setResizable(true);
+        setLayout(new BorderLayout());
+        //PLEASE READ THIS GREG: 
+        //https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
+        w.setContentPane(this);
 
 
- JLabel scienceText = new JLabel();
-  JTextArea scienceTextArea,rFinal, tCheck;
- int height = 600;
- int width = 800;
- 
-
- public WeatherMan(){    
-
-   
-   city = new City();
-   cityN = city.nameGetter(0); 
-   a  = new numGenerator(city);
-  sPercent = (int)a.getPercent();
-  thing = a.getEvent(); 
-  w = new JFrame();
-  w.setSize(width, height);
-  w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  w.setResizable(true);
-  setLayout(new BorderLayout());
-  //PLEASE READ THIS GREG: 
-  //https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
-  w.setContentPane(this);
-
-  
-     Rectangle r = w.getBounds();
-   double currentHeight = r.height;
-   double currentWidth = r.width;
-   
-  
-  
-  submit = new JButton("50");
-  //submit.setBounds(500,height - 75,100,50);
-  submit.addActionListener(this);
-  input = new JSlider();
-  //input.setBounds(200, height - 100, 300, 100);
-
-  input.addChangeListener(new ChangeListener() {
-  public void stateChanged(ChangeEvent e) {
-        String a = "" + input.getValue();
-        submit.setText(a);
-      }
-    });
-
-  String sData = Fluff.getScience(thing,sPercent,cityN);
-
-  scienceTextArea = new JTextArea();
-  scienceTextArea.setText(sData);
-  scienceTextArea.setFont(font);  
-    scienceTextArea.setLineWrap(true);
-    scienceTextArea.setWrapStyleWord(true);
-
-
-    rFinal = new JTextArea();
-    rFinal.setText(""); 
-    rFinal.setFont(font); 
-    rFinal.setLineWrap(true); 
-    rFinal.setWrapStyleWord(true);
-
-    tCheck = new JTextArea(); 
-    tCheck.setText(""+check); 
-    tCheck.setFont(font);
-    tCheck.setLineWrap(true);
-    tCheck.setWrapStyleWord(true);
-    //scienceTextArea.setComponentOrientation(ComponentOrientation.CENTER);
-
-  JScrollPane scrollPane = new JScrollPane(scienceTextArea);
-  scienceTextArea.setOpaque(false);
-  scienceTextArea.setEditable(false);
-  scienceTextArea.setFocusable(false);
-
-  JScrollPane scrollPanee = new JScrollPane(rFinal);
-  rFinal.setOpaque(false); 
-  rFinal.setEditable(false); 
-  rFinal.setFocusable(false);
-
-    JScrollPane scrollpaneee = new JScrollPane(tCheck);
-    tCheck.setOpaque(false);
-    tCheck.setEditable(false); 
-    tCheck.setFocusable(false);
+        Rectangle r = w.getBounds();
+        double currentHeight = r.height;
+        double currentWidth = r.width;
 
 
 
+        submit = new JButton("50");
+        //submit.setBounds(500,height - 75,100,50);
+        submit.addActionListener(this);
+        input = new JSlider();
+        //input.setBounds(200, height - 100, 300, 100);
 
-  //added a new panel to store the button and slider next to each other!
-  //no need for absolute positioning anymore 
-  JPanel bottomPanel = new JPanel();
-  bottomPanel.add(input,BorderLayout.PAGE_END);
-  bottomPanel.add(submit,BorderLayout.PAGE_END);
-  JPanel sciencePanel = new JPanel();
-  scienceTextArea.setPreferredSize(new Dimension(200, (int)currentHeight));
-  sciencePanel.add(scienceTextArea,BorderLayout.PAGE_END);
-  JPanel result = new JPanel();
-  result.setPreferredSize(new Dimension((int)currentWidth-500, (int)currentHeight));
-  result.add(rFinal,BorderLayout.PAGE_END);
-  JPanel pCheck = new JPanel();
-   pCheck.setPreferredSize(new Dimension((int)currentWidth, (int)currentHeight));
-   pCheck.add(tCheck,BorderLayout.LINE_END);
+        input.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                String a = "" + input.getValue();
+                submit.setText(a);
+            }
+        });
+
+        String sData = Fluff.getScience(thing, sPercent, cityN);
+
+        scienceTextArea = new JTextArea();
+        scienceTextArea.setText(sData);
+        scienceTextArea.setFont(font);
+        scienceTextArea.setLineWrap(true);
+        scienceTextArea.setWrapStyleWord(true);
 
 
-  
+        rFinal = new JTextArea();
+        rFinal.setText("");
+        rFinal.setFont(font);
+        rFinal.setLineWrap(true);
+        rFinal.setWrapStyleWord(true);
 
-  
-  w.add(bottomPanel,BorderLayout.PAGE_END);
-  w.add(sciencePanel,BorderLayout.LINE_START);
-  w.add(result,BorderLayout.LINE_END); 
-  //w.add(pCheck,BorderLayout.LINE_END); //I DON'T KNOW HOW TO ADD THIS SO THAT RESULT DOESN'T GO AWAY AND I DON'T KNOW HOW TO MAKE RESULT FILL UP MORE OF THE SCREEN. 
-  scienceTextArea.addComponentListener(new ComponentAdapter() {
+        tCheck = new JTextArea();
+        tCheck.setText("" + check);
+        tCheck.setFont(font);
+        tCheck.setLineWrap(true);
+        tCheck.setWrapStyleWord(true);
+        //scienceTextArea.setComponentOrientation(ComponentOrientation.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(scienceTextArea);
+        scienceTextArea.setOpaque(false);
+        scienceTextArea.setEditable(false);
+        scienceTextArea.setFocusable(false);
+
+        JScrollPane scrollPanee = new JScrollPane(rFinal);
+        rFinal.setOpaque(false);
+        rFinal.setEditable(false);
+        rFinal.setFocusable(false);
+
+        JScrollPane scrollpaneee = new JScrollPane(tCheck);
+        tCheck.setOpaque(true);
+        tCheck.setEditable(false);
+        tCheck.setFocusable(false);
+        //added a new panel to store the button and slider next to each other!
+        //no need for absolute positioning anymore 
+        bottomPanel = new JPanel();
+        bottomPanel.add(input, BorderLayout.PAGE_END);
+        bottomPanel.add(submit, BorderLayout.PAGE_END);
+        bottomPanel.add(next, BorderLayout.LINE_END);
+        JPanel sciencePanel = new JPanel();
+        scienceTextArea.setPreferredSize(new Dimension(200, (int) currentHeight));
+        sciencePanel.add(scienceTextArea, BorderLayout.PAGE_END);
+        JPanel result = new JPanel();
+        result.setPreferredSize(new Dimension((int) currentWidth - 500, (int) currentHeight));
+        result.add(rFinal, BorderLayout.PAGE_END);
+        pCheck = new JPanel();
+        //pCheck.setPreferredSize(new Dimension((int) currentWidth/2, (int) currentHeight));
+        pCheck.add(tCheck, BorderLayout.LINE_END);
+        w.add(pCheck, BorderLayout.CENTER);
+        w.add(bottomPanel, BorderLayout.PAGE_END);
+        w.add(sciencePanel, BorderLayout.LINE_START);
+        w.add(result, BorderLayout.LINE_END);
+        //w.add(pCheck,BorderLayout.LINE_END); //I DON'T KNOW HOW TO ADD THIS SO THAT RESULT DOESN'T GO AWAY AND I DON'T KNOW HOW TO MAKE RESULT FILL UP MORE OF THE SCREEN. 
+        //ON A SCALE OF 1 TO GAVRI THIS CODE WORKS WORSE THAN GAVRI 
+        scienceTextArea.addComponentListener(new ComponentAdapter() {
 
             @Override
             public void componentResized(ComponentEvent ce) {
@@ -142,53 +138,69 @@ public class WeatherMan extends JPanel implements ActionListener{
         });
 
 
-    w.setVisible(true);
- } 
- 
- 
-public void actionPerformed(ActionEvent e) {
-      if(e.getSource() == submit && turn < maxTurns){
-       System.out.println("Next Turn");
-      // do all the calculations here, and eventually bring up results panel.
-       //this is where the rest of the calculations are called with their repective arguments (like player input)
-       double UI = input.getValue();
-       //City city = new City(); //just init the city so it can randomize
-       //city = city.returnCity();
-      out = new successOrFail(this, check, city, UI, sPercent);
-
-       turn+=1;
-       
-       if(turn == maxTurns){
-       submit.setText("End Game!");
-       }
-       else {
-        tCheck.setText("" + (double)((int)(check*100))/100);
-          rFinal.setText(Fluff.getResult(out.getOutcome(),thing,cityN));
-          City city = new City();
-      numGenerator a  = new numGenerator(city);
-      sPercent = a.getPercent();
-      thing = a.getEvent();
-      cityN = city.nameGetter(3); 
-      //scienceTextArea.setText(Fluff.getScience(thing,sPercent,cityN))
+        w.setVisible(true);
+    }
 
 
-       }
-       
-       
-       }
-       
-             
-   }
-   
-   public void setCheck(double val){
-   check = val;  
-   }
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submit && turn < maxTurns) {
+            next.setVisible(true);
+            submit.setVisible(false);
+            input.setVisible(false);
+            //w.remove(bottomPanel);
+            System.out.println("Next Turn");
+            // do all the calculations here, and eventually bring up results panel.
+            //this is where the rest of the calculations are called with their repective arguments (like player input)
+            double UI = input.getValue();
 
- 
- public static void main(String[] args){
-   
- new WeatherMan();
- }
+            out = new successOrFail(this, check, city, UI, sPercent);
+            tCheck.setText("" + (double)((int)(check * 100)) / 100);
+                rFinal.setText(Fluff.getResult(out.getOutcome(), thing, cityN));
+            turn += 1;
+
+            
+        }
+
+        else if (e.getSource() == next && turn < maxTurns) {
+            next.setVisible(false);
+            submit.setVisible(true);
+            input.setVisible(true);
+            w.add(bottomPanel);
+            System.out.println("Next Button Clicked");
+           if (turn == maxTurns) {
+                submit.setText("End Game!");
+            } else {
+                
+              
+                City city = new City();
+                numGenerator a = new numGenerator(city);
+                sPercent = a.getPercent();
+                thing = a.getEvent();
+                cityN = city.nameGetter(3);
+                scienceTextArea.setText(Fluff.getScience(thing, sPercent, cityN));
+                rFinal.setText("");
+                //scienceTextArea.setText(Fluff.getScience(thing,sPercent,cityN))
+
+
+            }
+
+
+        }
+
+
+
+    }
+
+    public void setCheck(double val) {
+        check = val;
+        System.out.println("Changed the check to " + val +"!");
+    }
+
+
+    public static void main(String[] args) {
+
+        new WeatherMan();
+    }
 
 
 }
