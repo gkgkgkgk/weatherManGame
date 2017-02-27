@@ -10,7 +10,7 @@ public class WeatherMan extends JPanel implements ActionListener {
     JFrame w;
     JButton submit, next;
     JSlider input;
-    JPanel bottomPanel, pCheck, sciencePanel, result;
+    JPanel bottomPanel, pCheck, sciencePanel, result, bottomPanelInput;
     JLabel scienceText = new JLabel();
     JTextArea scienceTextArea, rFinal, tCheck;
 
@@ -123,9 +123,15 @@ public class WeatherMan extends JPanel implements ActionListener {
         tCheck.setEditable(false);
         tCheck.setFocusable(false);
 
+
+        bottomPanelInput = new JPanel();
+        bottomPanelInput.add(input, BorderLayout.PAGE_END);
+        bottomPanelInput.add(submit, BorderLayout.PAGE_END);
+
+
+
         bottomPanel = new JPanel();
-        bottomPanel.add(input, BorderLayout.PAGE_END);
-        bottomPanel.add(submit, BorderLayout.PAGE_END);
+        bottomPanel.add(bottomPanelInput, BorderLayout.PAGE_END);
         bottomPanel.add(next, BorderLayout.LINE_END);
         
         sciencePanel = new JPanel();
@@ -143,7 +149,7 @@ public class WeatherMan extends JPanel implements ActionListener {
 
         
         //add to main Panel
-        w.add(pCheck, BorderLayout.CENTER);
+        w.add(pCheck, BorderLayout.PAGE_START);
         w.add(bottomPanel, BorderLayout.PAGE_END);
         w.add(sciencePanel, BorderLayout.LINE_START);
         w.add(result, BorderLayout.LINE_END);
@@ -158,9 +164,9 @@ public class WeatherMan extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit && turn < maxTurns) {
             next.setVisible(true);
-            submit.setVisible(false);
-            input.setVisible(false);
-            //w.remove(bottomPanel);
+            bottomPanelInput.setVisible(true);
+            //submit.setVisible(false);
+            //input.setVisible(false);
             System.out.println("Next Turn");
             // do all the calculations here, and eventually bring up results panel.
             //this is where the rest of the calculations are called with their repective arguments (like player input)
@@ -175,10 +181,11 @@ public class WeatherMan extends JPanel implements ActionListener {
         }
 
         else if (e.getSource() == next && turn < maxTurns) {
+            bottomPanelInput.setEnabled(false);
             next.setVisible(false);
-            submit.setVisible(true);
-            input.setVisible(true);
-            w.add(bottomPanel);
+            //when we set them true again they popup at the top for some reason.
+            //submit.setVisible(true);
+            //input.setVisible(true);
             System.out.println("Next Button Clicked");
            if (turn == maxTurns) {
                 submit.setText("End Game!");
