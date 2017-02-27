@@ -139,7 +139,7 @@ public class WeatherMan extends JPanel implements ActionListener {
         sciencePanel.add(scienceTextArea, BorderLayout.PAGE_END);
         
         result = new JPanel();
-        result.setPreferredSize(new Dimension((int) currentWidth - 500, (int) currentHeight));
+        rFinal.setPreferredSize(new Dimension(200, (int) currentHeight));
         result.add(rFinal, BorderLayout.PAGE_END);
         
         pCheck = new JPanel();
@@ -164,9 +164,8 @@ public class WeatherMan extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submit && turn < maxTurns) {
             next.setVisible(true);
-            bottomPanelInput.setVisible(true);
-            //submit.setVisible(false);
-            //input.setVisible(false);
+            bottomPanelInput.setVisible(false);
+
             System.out.println("Next Turn");
             // do all the calculations here, and eventually bring up results panel.
             //this is where the rest of the calculations are called with their repective arguments (like player input)
@@ -181,11 +180,8 @@ public class WeatherMan extends JPanel implements ActionListener {
         }
 
         else if (e.getSource() == next && turn < maxTurns) {
-            bottomPanelInput.setEnabled(false);
-            next.setVisible(false);
-            //when we set them true again they popup at the top for some reason.
-            //submit.setVisible(true);
-            //input.setVisible(true);
+            bottomPanelInput.setVisible(true);
+            next.setVisible(false);            
             System.out.println("Next Button Clicked");
            if (turn == maxTurns) {
                 submit.setText("End Game!");
