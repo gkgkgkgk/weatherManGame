@@ -5,15 +5,22 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class WeatherMan extends JPanel implements ActionListener {
+    
+    //UI Variables
+    JFrame w;
+    JButton submit, next;
+    JSlider input;
+    JPanel bottomPanel, pCheck, sciencePanel, result;
+    JLabel scienceText = new JLabel();
+    JTextArea scienceTextArea, rFinal, tCheck;
+
+
     private Font font = new Font("serif", Font.PLAIN, 25);
     public int turn = 0; // check when game is over
     public int maxTurns = 20;
     public boolean fatal = false;
     // double profit if fatal weather is predicted, double loss and possible job loss if not
-    JFrame w;
-    JButton submit;
-    JSlider input;
-    JButton next;
+    
 
     private double check = 50000.00; //this is your money
     private successOrFail out;
@@ -22,46 +29,48 @@ public class WeatherMan extends JPanel implements ActionListener {
     private City city;
     private numGenerator a;
     private String cityN;
-    JPanel bottomPanel, pCheck;
-
-    JLabel scienceText = new JLabel();
-    JTextArea scienceTextArea, rFinal, tCheck;
+    
     int height = 600;
     int width = 800;
 
 
     public WeatherMan() {
-
-        next = new JButton("Next");
-        next.setVisible(false);
-        next.addActionListener(this);
-        city = new City();
-        cityN = city.nameGetter(0);
-        a = new numGenerator(city);
-        sPercent = (int) a.getPercent();
-        thing = a.getEvent();
+        //Window and main Panel stuff
         w = new JFrame();
         w.setSize(width, height);
         w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         w.setResizable(true);
-        setLayout(new BorderLayout());
-        //PLEASE READ THIS GREG: 
-        //https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
         w.setContentPane(this);
+        setLayout(new BorderLayout());
 
-
+        //get window size
         Rectangle r = w.getBounds();
         double currentHeight = r.height;
         double currentWidth = r.width;
 
 
+        //initial setup:
+        city = new City();
+        cityN = city.nameGetter(0);
+        a = new numGenerator(city);
+        sPercent = (int) a.getPercent();
+        thing = a.getEvent();
+        
 
+        
+        //sData (science data) is important
+        String sData = Fluff.getScience(thing, sPercent, cityN);
+
+
+        //set up UI
+        next = new JButton("Next");
+        next.setVisible(false);
+        next.addActionListener(this);
+            
         submit = new JButton("50");
-        //submit.setBounds(500,height - 75,100,50);
         submit.addActionListener(this);
+        
         input = new JSlider();
-        //input.setBounds(200, height - 100, 300, 100);
-
         input.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 String a = "" + input.getValue();
@@ -69,14 +78,23 @@ public class WeatherMan extends JPanel implements ActionListener {
             }
         });
 
-        String sData = Fluff.getScience(thing, sPercent, cityN);
+
 
         scienceTextArea = new JTextArea();
         scienceTextArea.setText(sData);
         scienceTextArea.setFont(font);
         scienceTextArea.setLineWrap(true);
         scienceTextArea.setWrapStyleWord(true);
+        scienceTextArea.addComponentListener(new ComponentAdapter() {
 
+            @Override
+            public void componentResized(ComponentEvent ce) {
+
+                System.out.println("I've changed size");
+
+            }
+
+        });
 
         rFinal = new JTextArea();
         rFinal.setText("");
@@ -89,8 +107,7 @@ public class WeatherMan extends JPanel implements ActionListener {
         tCheck.setFont(font);
         tCheck.setLineWrap(true);
         tCheck.setWrapStyleWord(true);
-        //scienceTextArea.setComponentOrientation(ComponentOrientation.CENTER);
-
+        //adding scrollpanes for the text areas
         JScrollPane scrollPane = new JScrollPane(scienceTextArea);
         scienceTextArea.setOpaque(false);
         scienceTextArea.setEditable(false);
@@ -105,39 +122,35 @@ public class WeatherMan extends JPanel implements ActionListener {
         tCheck.setOpaque(true);
         tCheck.setEditable(false);
         tCheck.setFocusable(false);
-        //added a new panel to store the button and slider next to each other!
-        //no need for absolute positioning anymore 
+
         bottomPanel = new JPanel();
         bottomPanel.add(input, BorderLayout.PAGE_END);
         bottomPanel.add(submit, BorderLayout.PAGE_END);
         bottomPanel.add(next, BorderLayout.LINE_END);
-        JPanel sciencePanel = new JPanel();
+        
+        sciencePanel = new JPanel();
         scienceTextArea.setPreferredSize(new Dimension(200, (int) currentHeight));
         sciencePanel.add(scienceTextArea, BorderLayout.PAGE_END);
-        JPanel result = new JPanel();
+        
+        result = new JPanel();
         result.setPreferredSize(new Dimension((int) currentWidth - 500, (int) currentHeight));
         result.add(rFinal, BorderLayout.PAGE_END);
+        
         pCheck = new JPanel();
-        //pCheck.setPreferredSize(new Dimension((int) currentWidth/2, (int) currentHeight));
         pCheck.add(tCheck, BorderLayout.LINE_END);
+
+
+
+        
+        //add to main Panel
         w.add(pCheck, BorderLayout.CENTER);
         w.add(bottomPanel, BorderLayout.PAGE_END);
         w.add(sciencePanel, BorderLayout.LINE_START);
         w.add(result, BorderLayout.LINE_END);
         //w.add(pCheck,BorderLayout.LINE_END); //I DON'T KNOW HOW TO ADD THIS SO THAT RESULT DOESN'T GO AWAY AND I DON'T KNOW HOW TO MAKE RESULT FILL UP MORE OF THE SCREEN. 
         //ON A SCALE OF 1 TO GAVRI THIS CODE WORKS WORSE THAN GAVRI 
-        scienceTextArea.addComponentListener(new ComponentAdapter() {
-
-            @Override
-            public void componentResized(ComponentEvent ce) {
-
-                System.out.println("I've changed size");
-
-            }
-
-        });
-
-
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   <---------Not anymore
+        
         w.setVisible(true);
     }
 
