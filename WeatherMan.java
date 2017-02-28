@@ -174,7 +174,9 @@ public class WeatherMan extends JPanel implements ActionListener {
             out = new successOrFail(this, check, city, UI, sPercent);
             tCheck.setText("" + (double)((int)(check * 100)) / 100);
                 rFinal.setText(Fluff.getResult(out.getOutcome(), thing, cityN));
-            turn += 1;
+            turn ++ ;
+            if(turn >= maxTurns)
+                next.setText("Restart"); 
 
             
         }
@@ -183,8 +185,7 @@ public class WeatherMan extends JPanel implements ActionListener {
             bottomPanelInput.setVisible(true);
             next.setVisible(false);            
             System.out.println("Next Button Clicked");
-           if (turn == maxTurns) {
-                submit.setText("End Game!");
+           if (turn >= maxTurns) {
             } else {
                 
               
@@ -202,6 +203,13 @@ public class WeatherMan extends JPanel implements ActionListener {
 
 
         }
+                    else if (e.getSource() == next && turn >= maxTurns)
+            {
+                new WeatherMan(); 
+                w.dispose();
+            }
+
+
 
 
 
