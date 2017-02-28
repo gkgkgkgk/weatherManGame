@@ -5,7 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class WeatherMan extends JPanel implements ActionListener {
-    
+
     //UI Variables
     JFrame w;
     JButton submit, next;
@@ -20,7 +20,7 @@ public class WeatherMan extends JPanel implements ActionListener {
     public int maxTurns = 20;
     public boolean fatal = false;
     // double profit if fatal weather is predicted, double loss and possible job loss if not
-    
+
 
     private double check = 50000.00; //this is your money
     private successOrFail out;
@@ -29,7 +29,7 @@ public class WeatherMan extends JPanel implements ActionListener {
     private City city;
     private numGenerator a;
     private String cityN;
-    
+    //height width used for the layout stuff
     int height = 600;
     int width = 800;
 
@@ -55,9 +55,9 @@ public class WeatherMan extends JPanel implements ActionListener {
         a = new numGenerator(city);
         sPercent = (int) a.getPercent();
         thing = a.getEvent();
-        
 
-        
+
+
         //sData (science data) is important
         String sData = Fluff.getScience(thing, sPercent, cityN);
 
@@ -66,10 +66,10 @@ public class WeatherMan extends JPanel implements ActionListener {
         next = new JButton("Next");
         next.setVisible(false);
         next.addActionListener(this);
-            
+
         submit = new JButton("50");
         submit.addActionListener(this);
-        
+
         input = new JSlider();
         input.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -79,7 +79,7 @@ public class WeatherMan extends JPanel implements ActionListener {
         });
 
 
-
+        //coninuing to set up UI
         scienceTextArea = new JTextArea();
         scienceTextArea.setText(sData);
         scienceTextArea.setFont(font);
@@ -95,7 +95,7 @@ public class WeatherMan extends JPanel implements ActionListener {
             }
 
         });
-
+        //more UI
         rFinal = new JTextArea();
         rFinal.setText("");
         rFinal.setFont(font);
@@ -133,21 +133,21 @@ public class WeatherMan extends JPanel implements ActionListener {
         bottomPanel = new JPanel();
         bottomPanel.add(bottomPanelInput, BorderLayout.PAGE_END);
         bottomPanel.add(next, BorderLayout.LINE_END);
-        
+
         sciencePanel = new JPanel();
         scienceTextArea.setPreferredSize(new Dimension(200, (int) currentHeight));
         sciencePanel.add(scienceTextArea, BorderLayout.PAGE_END);
-        
+
         result = new JPanel();
         rFinal.setPreferredSize(new Dimension(200, (int) currentHeight));
         result.add(rFinal, BorderLayout.PAGE_END);
-        
+
         pCheck = new JPanel();
         pCheck.add(tCheck, BorderLayout.LINE_END);
 
 
 
-        
+
         //add to main Panel
         w.add(pCheck, BorderLayout.PAGE_START);
         w.add(bottomPanel, BorderLayout.PAGE_END);
@@ -156,13 +156,15 @@ public class WeatherMan extends JPanel implements ActionListener {
         //w.add(pCheck,BorderLayout.LINE_END); //I DON'T KNOW HOW TO ADD THIS SO THAT RESULT DOESN'T GO AWAY AND I DON'T KNOW HOW TO MAKE RESULT FILL UP MORE OF THE SCREEN. 
         //ON A SCALE OF 1 TO GAVRI THIS CODE WORKS WORSE THAN GAVRI 
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   <---------Not anymore
-        
+
         w.setVisible(true);
     }
 
 
     public void actionPerformed(ActionEvent e) {
+        //get submit button
         if (e.getSource() == submit && turn < maxTurns) {
+            //hide the slider, make the next button appear
             next.setVisible(true);
             bottomPanelInput.setVisible(false);
 
@@ -170,25 +172,21 @@ public class WeatherMan extends JPanel implements ActionListener {
             // do all the calculations here, and eventually bring up results panel.
             //this is where the rest of the calculations are called with their repective arguments (like player input)
             double UI = input.getValue();
-
+            //new SuccessOrFail class to do calculations
             out = new successOrFail(this, check, city, UI, sPercent);
             tCheck.setText("" + (double)((int)(check * 100)) / 100);
-                rFinal.setText(Fluff.getResult(out.getOutcome(), thing, cityN));
-            turn ++ ;
-            if(turn >= maxTurns)
-                next.setText("Restart"); 
-
-            
-        }
-
-        else if (e.getSource() == next && turn < maxTurns) {
+            rFinal.setText(Fluff.getResult(out.getOutcome(), thing, cityN));
+            turn++;
+            if (turn >= maxTurns)
+                next.setText("Restart");
+            //next turn
+        } else if (e.getSource() == next && turn < maxTurns) {
             bottomPanelInput.setVisible(true);
-            next.setVisible(false);            
+            next.setVisible(false);
             System.out.println("Next Button Clicked");
-           if (turn >= maxTurns) {
-            } else {
-                
-              
+            if (turn >= maxTurns) {} else {
+
+                //make a new city with a new NumGenerator, as well as all new variables. 
                 City city = new City();
                 numGenerator a = new numGenerator(city);
                 sPercent = a.getPercent();
@@ -201,26 +199,24 @@ public class WeatherMan extends JPanel implements ActionListener {
 
             }
 
-
+            //restart the game
+        } else if (e.getSource() == next && turn >= maxTurns) {
+            new WeatherMan();
+            w.dispose();
         }
-                    else if (e.getSource() == next && turn >= maxTurns)
-            {
-                new WeatherMan(); 
-                w.dispose();
-            }
 
 
 
 
 
     }
-
+    //this function is used elsewhere
     public void setCheck(double val) {
         check = val;
-        System.out.println("Changed the check to " + val +"!");
+        System.out.println("Changed the check to " + val + "!");
     }
 
-
+    //main function
     public static void main(String[] args) {
 
         new WeatherMan();
